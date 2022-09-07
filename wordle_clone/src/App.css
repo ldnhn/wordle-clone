@@ -1,0 +1,134 @@
+.app {
+  height: 100vh;
+}
+
+.title {
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+.chosenWord {
+  background-color: black;
+  color: white;
+  height: 30px;
+  width: 80px;
+  text-align: center;
+  border-radius: 5px;
+  justify-content: space-around;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -5px;
+  display: block;
+}
+
+.bar {
+  width: 100vw;
+  border-bottom: 1.5px solid rgb(211, 211, 211);
+}
+
+.tiles-container {
+  justify-content: space-around;
+  display: flex;
+}
+
+.table {
+  margin-top: 40px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.line {
+  display: flex;
+  gap: 5px;
+}
+
+.tile {
+  width: 60px;
+  height: 60px;
+  font-weight: bolder;
+  border: 2px solid rgb(211, 211, 211);
+  font-size: 30px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  transition: 0.2s ease-in;
+}
+
+.correct {
+  background-color: rgb(90, 156, 81);
+  border: 2px solid rgb(90, 156, 81);
+  color: white;
+  transform: rotateX(360deg);
+  transition: 0.8s ease;
+}
+
+.incorrect {
+  background-color: rgb(101, 105, 107);
+  border: 2px solid rgb(101, 105, 107);
+  color: white;
+  transform: rotateX(360deg);
+  transition: 0.8s ease;
+}
+
+.close {
+  background-color: rgb(190, 167, 71);
+  border: 2px solid rgb(190, 167, 71);
+  color: white;
+  transform: rotateX(360deg);
+  transition: 0.8s ease;
+}
+
+.not-null {
+  border: 2px solid rgb(101, 105, 107);
+  width: 60px;
+  height: 60px;
+  font-weight: bolder;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  animation: zoom-in-out 0.1s ease;
+}
+
+@keyframes zoom-in-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.one {
+  transition-delay: 0s;
+}
+
+.two {
+  transition-delay: 0.2s;
+}
+
+.three {
+  transition-delay: 0.4s;
+}
+
+.four {
+  transition-delay: 0.6s;
+}
+
+.five {
+  transition-delay: 0.8s;
+}
