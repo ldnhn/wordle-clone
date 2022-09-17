@@ -10,12 +10,19 @@ function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [triesCount, setTriesCount] = useState(0);
 
+  // const [isWordInList, setIsWordInList] = useState(false);
+
   useEffect(() => {
     const handleType = (event) => {
       if (isGameOver) {
         return;
       }
+
       if (event.key === "Enter") {
+        if (!isWordInList(currentGuess)) {
+          return;
+        }
+
         if (currentGuess.length !== 5) {
           return;
         }
@@ -61,10 +68,20 @@ function App() {
     <div className="app" onFocus={true}>
       <div className="title">Wordle Clone</div>
       <div className="bar"></div>
+
       {triesCount === 6 && (
         <div className="chosenWord" id="answer">
           {chosenWord}
         </div>
+      )}
+      {isGameOver && (
+        <div className="chosenWord" id="answer">
+          Great!
+        </div>
+      )}
+
+      {!isWordInList(currentGuess) && currentGuess.length === 5 && (
+        <div className="chosenWord">invalid!</div>
       )}
 
       <div className="tiles-container">
@@ -88,8 +105,14 @@ function App() {
 
 export default App;
 
+function isWordInList(guess) {
+  if (wordList.includes(guess)) return true;
+  return false;
+}
+
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
+
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
