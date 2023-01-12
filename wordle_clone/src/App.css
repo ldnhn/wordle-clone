@@ -1,5 +1,5 @@
 .app {
-  height: 100vh;
+  height: 100%;
 }
 
 .title {
@@ -62,31 +62,22 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  transition: 0.2s ease-in;
+  transition: 0.2s ease-in-out;
 }
 
 .correct {
-  background-color: rgb(90, 156, 81);
-  border: 2px solid rgb(90, 156, 81);
-  color: white;
-  transform: rotateX(360deg);
-  transition: 0.8s ease;
+  animation: correct-flip 0.6s ease-in-out forwards;
+  border: 2px solid rgb(101, 105, 107);
 }
 
 .incorrect {
-  background-color: rgb(101, 105, 107);
+  animation: incorrect-flip 0.6s ease-in-out forwards;
   border: 2px solid rgb(101, 105, 107);
-  color: white;
-  transform: rotateX(360deg);
-  transition: 0.8s ease;
 }
 
 .close {
-  background-color: rgb(190, 167, 71);
-  border: 2px solid rgb(190, 167, 71);
-  color: white;
-  transform: rotateX(360deg);
-  transition: 0.8s ease;
+  animation: close-flip 0.6s ease-in-out forwards;
+  border: 2px solid rgb(101, 105, 107);
 }
 
 .not-null {
@@ -99,7 +90,7 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  animation: zoom-in-out 0.1s ease;
+  animation: zoom-in-out 0.2s ease-in-out;
 }
 
 @keyframes zoom-in-out {
@@ -107,7 +98,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
   100% {
     transform: scale(1);
@@ -115,23 +106,23 @@
 }
 
 .one {
-  transition-delay: 0s;
+  animation-delay: 0s;
 }
 
 .two {
-  transition-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 .three {
-  transition-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 
 .four {
-  transition-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 
 .five {
-  transition-delay: 0.8s;
+  animation-delay: 0.8s;
 }
 
 .jiggle {
@@ -171,5 +162,59 @@
   }
   100% {
     transform: translate(1px, -2px);
+  }
+}
+
+@keyframes correct-flip {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    background: white;
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+}
+
+@keyframes incorrect-flip {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    background: white;
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+    background: rgb(101, 105, 107);
+    border: 2px solid rgb(101, 105, 107);
+    color: white;
+  }
+}
+
+@keyframes close-flip {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    background: white;
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+    background: rgb(190, 167, 71);
+    border: 2px solid rgb(190, 167, 71);
+    color: white;
   }
 }
