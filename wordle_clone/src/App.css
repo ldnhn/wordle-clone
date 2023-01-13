@@ -105,24 +105,24 @@
   }
 }
 
-.one {
+.animation-delay-0 {
   animation-delay: 0s;
 }
 
-.two {
-  animation-delay: 0.2s;
+.animation-delay-200 {
+  animation-delay: 200ms;
 }
 
-.three {
-  animation-delay: 0.4s;
+.animation-delay-400 {
+  animation-delay: 400ms;
 }
 
-.four {
-  animation-delay: 0.6s;
+.animation-delay-600 {
+  animation-delay: 600ms;
 }
 
-.five {
-  animation-delay: 0.8s;
+.animation-delay-800 {
+  animation-delay: 800ms;
 }
 
 .jiggle {

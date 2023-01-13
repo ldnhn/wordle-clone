@@ -1,7 +1,6 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -9,8 +8,6 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [triesCount, setTriesCount] = useState(0);
-
-  // const [isWordInList, setIsWordInList] = useState(false);
 
   useEffect(() => {
     const handleType = (event) => {
@@ -20,7 +17,7 @@ function App() {
 
       if (event.key === "Enter") {
         if (!isWordInList(currentGuess)) {
-          return;
+          //setCurrentGuess("");
         }
 
         if (currentGuess.length !== 5) {
@@ -46,6 +43,7 @@ function App() {
       if (currentGuess.length >= 5) {
         return;
       }
+
       const isLetter = event.key.match(/^[a-z]{1}$/) != null;
       if (isLetter) {
         setCurrentGuess((oldGuess) => oldGuess + event.key);
@@ -58,7 +56,9 @@ function App() {
 
   useEffect(() => {
     const fetchWord = async () => {
-      const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+      const randomWord = await wordList[
+        Math.floor(Math.random() * wordList.length)
+      ];
       setChosenWord(randomWord);
     };
     fetchWord();
@@ -74,14 +74,11 @@ function App() {
           {chosenWord}
         </div>
       )}
+
       {isGameOver && (
         <div className="chosenWord" id="answer">
           Great!
         </div>
-      )}
-
-      {!isWordInList(currentGuess) && currentGuess.length === 5 && (
-        <div className="chosenWord">invalid!</div>
       )}
 
       <div className="tiles-container">
@@ -121,25 +118,21 @@ function Line({ guess, isFinal, chosenWord }) {
     }
 
     if (isFinal) {
-      className = "tile";
-      if (i === 0) {
-        className += " one";
-      } else if (i === 1) {
-        className += " two";
-      } else if (i === 2) {
-        className += " three";
-      } else if (i === 3) {
-        className += " four";
-      } else if (i === 4) {
-        className += " five";
-      }
-
-      if (char === chosenWord[i]) {
-        className += " correct";
-      } else if (chosenWord.includes(char)) {
-        className += " close";
+      if (!isWordInList(guess)) {
+        className = "tile";
+        className += " jiggle";
       } else {
-        className += " incorrect";
+        className = "tile";
+        let animationDelayDuration = " animation-delay-" + i * 200;
+        className += animationDelayDuration;
+
+        if (char === chosenWord[i]) {
+          className += " correct";
+        } else if (chosenWord.includes(char)) {
+          className += " close";
+        } else {
+          className += " incorrect";
+        }
       }
     }
 
