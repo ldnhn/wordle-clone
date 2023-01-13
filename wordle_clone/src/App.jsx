@@ -18,11 +18,13 @@ function App() {
       if (event.key === "Enter") {
         if (!isWordInList(currentGuess)) {
           //setCurrentGuess("");
+          return;
         }
 
         if (currentGuess.length !== 5) {
           return;
         }
+
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
         setGuesses(newGuesses);
@@ -75,10 +77,10 @@ function App() {
         </div>
       )}
 
-      {isGameOver && (
-        <div className="chosenWord" id="answer">
-          Great!
-        </div>
+      {isGameOver && <div className="chosenWord">Great!</div>}
+
+      {!isWordInList(currentGuess) && currentGuess.length === 5 && (
+        <div className="warning">word not in list</div>
       )}
 
       <div className="tiles-container">
