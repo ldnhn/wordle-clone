@@ -1,7 +1,6 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -10,22 +9,24 @@ function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [triesCount, setTriesCount] = useState(0);
 
-  // const [isWordInList, setIsWordInList] = useState(false);
-
   useEffect(() => {
     const handleType = (event) => {
       if (isGameOver) {
         return;
       }
 
+      // TO DO: add keyboard
+      // try other ways to handle word not in list
+
       if (event.key === "Enter") {
         if (!isWordInList(currentGuess)) {
-          return;
+          //setIsValidWord(false);
         }
 
         if (currentGuess.length !== 5) {
           return;
         }
+
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
         setGuesses(newGuesses);
@@ -46,6 +47,7 @@ function App() {
       if (currentGuess.length >= 5) {
         return;
       }
+
       const isLetter = event.key.match(/^[a-z]{1}$/) != null;
       if (isLetter) {
         setCurrentGuess((oldGuess) => oldGuess + event.key);
@@ -56,9 +58,12 @@ function App() {
     return () => window.removeEventListener("keydown", handleType);
   }, [currentGuess, isGameOver, chosenWord, guesses, triesCount]);
 
+  // get a random word from static file wordleList.json
   useEffect(() => {
     const fetchWord = async () => {
-      const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+      const randomWord = await wordList[
+        Math.floor(Math.random() * wordList.length)
+      ];
       setChosenWord(randomWord);
     };
     fetchWord();
@@ -74,14 +79,11 @@ function App() {
           {chosenWord}
         </div>
       )}
-      {isGameOver && (
-        <div className="chosenWord" id="answer">
-          Great!
-        </div>
-      )}
+
+      {isGameOver && <div className="chosenWord">Great!</div>}
 
       {!isWordInList(currentGuess) && currentGuess.length === 5 && (
-        <div className="chosenWord">invalid!</div>
+        <div className="warning">word not in list</div>
       )}
 
       <div className="tiles-container">
@@ -110,36 +112,37 @@ function isWordInList(guess) {
   return false;
 }
 
-function Line({ guess, isFinal, chosenWord }) {
+function Line({ guess, isFinal, chosenWord, isValidWord }) {
   const tiles = [];
 
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
+
+    // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null";
     }
 
+    // add color to tiles
     if (isFinal) {
       className = "tile";
-      if (i === 0) {
-        className += " one";
-      } else if (i === 1) {
-        className += " two";
-      } else if (i === 2) {
-        className += " three";
-      } else if (i === 3) {
-        className += " four";
-      } else if (i === 4) {
-        className += " five";
-      }
 
-      if (char === chosenWord[i]) {
-        className += " correct";
-      } else if (chosenWord.includes(char)) {
-        className += " close";
+      // add jiggle animation
+      if (!isWordInList(guess)) {
+        className += " jiggle";
       } else {
-        className += " incorrect";
+        let animationDelayDuration = " animation-delay-" + i * 200;
+        className += animationDelayDuration;
+
+        // add colors
+        if (char === chosenWord[i]) {
+          className += " correct";
+        } else if (chosenWord.includes(char)) {
+          className += " close";
+        } else {
+          className += " incorrect";
+        }
       }
     }
 
