@@ -15,10 +15,12 @@ function App() {
         return;
       }
 
+      // TO DO: add keyboard
+      // try other ways to handle word not in list
+
       if (event.key === "Enter") {
         if (!isWordInList(currentGuess)) {
-          //setCurrentGuess("");
-          return;
+          //setIsValidWord(false);
         }
 
         if (currentGuess.length !== 5) {
@@ -56,6 +58,7 @@ function App() {
     return () => window.removeEventListener("keydown", handleType);
   }, [currentGuess, isGameOver, chosenWord, guesses, triesCount]);
 
+  // get a random word from static file wordleList.json
   useEffect(() => {
     const fetchWord = async () => {
       const randomWord = await wordList[
@@ -109,25 +112,30 @@ function isWordInList(guess) {
   return false;
 }
 
-function Line({ guess, isFinal, chosenWord }) {
+function Line({ guess, isFinal, chosenWord, isValidWord }) {
   const tiles = [];
 
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
+
+    // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null";
     }
 
+    // add color to tiles
     if (isFinal) {
+      className = "tile";
+
+      // add jiggle animation
       if (!isWordInList(guess)) {
-        className = "tile";
         className += " jiggle";
       } else {
-        className = "tile";
         let animationDelayDuration = " animation-delay-" + i * 200;
         className += animationDelayDuration;
 
+        // add colors
         if (char === chosenWord[i]) {
           className += " correct";
         } else if (chosenWord.includes(char)) {

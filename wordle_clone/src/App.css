@@ -143,42 +143,24 @@
 }
 
 .jiggle {
-  animation: jiggling 0.2s;
+  animation: jiggling 0.25s ease-in-out forwards;
 }
 
 @keyframes jiggling {
   0% {
-    transform: translate(1px, 1px);
+    transform: translateX(5px);
   }
-  10% {
-    transform: translate(-1px, -2px);
-  }
-  20% {
-    transform: translate(-3px, 0px);
-  }
-  30% {
-    transform: translate(3px, 2px);
-  }
-  40% {
-    transform: translate(1px, -1px);
+  25% {
+    transform: translateX(-10px);
   }
   50% {
-    transform: translate(-1px, 2px);
+    transform: translateX(10px);
   }
-  60% {
-    transform: translate(-3px, 1px);
-  }
-  70% {
-    transform: translate(3px, 1px);
-  }
-  80% {
-    transform: translate(-1px, -1px);
-  }
-  90% {
-    transform: translate(1px, 2px);
+  75% {
+    transform: translateX(-10px);
   }
   100% {
-    transform: translate(1px, -2px);
+    transform: translateX(0px);
   }
 }
 
