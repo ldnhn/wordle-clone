@@ -1,6 +1,7 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
+import { Heading, Center } from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -71,7 +72,11 @@ function App() {
 
   return (
     <div className="app" onFocus={true}>
-      <div className="title">Wordle Clone</div>
+      <Center>
+        <Heading as="h3" size="lg">
+          Wordle Clone
+        </Heading>
+      </Center>
       <div className="bar"></div>
 
       {triesCount === 6 && (
