@@ -1,7 +1,7 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center } from "@chakra-ui/react";
+import { Heading, Center, Box, Text } from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -71,24 +71,38 @@ function App() {
   }, []);
 
   return (
-    <div className="app" onFocus={true}>
+    <div onFocus={true} h={100}>
       <Center>
-        <Heading as="h3" size="lg">
+        <Heading as="h3" size="lg" mb={3} mt={2}>
           Wordle Clone
         </Heading>
       </Center>
       <div className="bar"></div>
 
       {triesCount === 6 && (
-        <div className="chosenWord" id="answer">
-          {chosenWord}
-        </div>
+        <Center>
+          <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
+            <Text as="b" textTransform="uppercase">
+              {chosenWord}
+            </Text>
+          </Box>
+        </Center>
       )}
 
-      {isGameOver && <div className="chosenWord">Great!</div>}
+      {isGameOver && (
+        <Center>
+          <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
+            <Text as="b">Great!</Text>
+          </Box>
+        </Center>
+      )}
 
       {!isWordInList(currentGuess) && currentGuess.length === 5 && (
-        <div className="warning">word not in list</div>
+        <Center>
+          <Box color="white" p={3} mt={1} bg="red.600" borderRadius="md">
+            <Text as="b">Word not in list</Text>
+          </Box>
+        </Center>
       )}
 
       <div className="tiles-container">
