@@ -170,3 +170,7 @@
     color: white;
   }
 }
+
+.keyboard-container {
+  transform: translate(-50%, -50%);
+}
