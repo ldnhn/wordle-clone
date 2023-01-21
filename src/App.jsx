@@ -1,7 +1,7 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center, Box, Text } from "@chakra-ui/react";
+import { Heading, Center, Box, Text, Flex } from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -105,7 +105,7 @@ function App() {
         </Center>
       )}
 
-      <div className="tiles-container">
+      <div className="tiles-container" mt={10}>
         <div className="table">
           {guesses.map((guess, i) => {
             const isCurrentGuess =
@@ -120,6 +120,46 @@ function App() {
           })}
         </div>
       </div>
+      <>
+        <Center>
+          <Flex>
+            <Box id="q">q</Box>
+            <Box id="q">w</Box>
+            <Box id="q">e</Box>
+            <Box id="q">r</Box>
+            <Box id="q">t</Box>
+            <Box id="q">y</Box>
+            <Box id="q">u</Box>
+            <Box id="q">i</Box>
+            <Box id="q">o</Box>
+            <Box id="q">p</Box>
+          </Flex>
+        </Center>
+        <Center>
+          <Flex>
+            <Box id="a">a</Box>
+            <Box id="s">s</Box>
+            <Box id="d">d</Box>
+            <Box id="f">f</Box>
+            <Box id="g">g</Box>
+            <Box id="h">h</Box>
+            <Box id="j">j</Box>
+            <Box id="k">k</Box>
+            <Box id="l">l</Box>
+          </Flex>
+        </Center>
+        <Center>
+          <Flex>
+            <Box id="z">z</Box>
+            <Box id="x">x</Box>
+            <Box id="c">c</Box>
+            <Box id="v">v</Box>
+            <Box id="b">b</Box>
+            <Box id="n">n</Box>
+            <Box id="m">m</Box>
+          </Flex>
+        </Center>
+      </>
     </div>
   );
 }
@@ -131,7 +171,7 @@ function isWordInList(guess) {
   return false;
 }
 
-function Line({ guess, isFinal, chosenWord, isValidWord }) {
+function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
   for (let i = 0; i < 5; i++) {
