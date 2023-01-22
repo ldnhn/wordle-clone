@@ -79,7 +79,7 @@ function App() {
       </Center>
       <div className="bar"></div>
 
-      {triesCount === 6 && (
+      {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
             <Text as="b" textTransform="uppercase">
@@ -89,7 +89,17 @@ function App() {
         </Center>
       )}
 
-      {isGameOver && (
+      {triesCount === 6 && isGameOver && (
+        <Center>
+          <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
+            <Text as="b" textTransform="uppercase">
+              Great!
+            </Text>
+          </Box>
+        </Center>
+      )}
+
+      {isGameOver && triesCount < 6 && (
         <Center>
           <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
             <Text as="b">Great!</Text>
