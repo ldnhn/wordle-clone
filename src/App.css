@@ -1,8 +1,3 @@
-.bar {
-  width: 100vw;
-  border-bottom: 1.5px solid rgb(211, 211, 211);
-}
-
 .tiles-container {
   justify-content: space-around;
   display: flex;
@@ -169,4 +164,8 @@
     border: 2px solid rgb(190, 167, 71);
     color: white;
   }
+}
+
+.keyboard-container {
+  transform: translate(-50%, -50%);
 }

@@ -1,7 +1,7 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center, Box, Text } from "@chakra-ui/react";
+import { Heading, Center, Box, Text, Flex, Divider } from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -16,14 +16,10 @@ function App() {
         return;
       }
 
-      // TO DO: add keyboard
-      // try other ways to handle word not in list
+      // TO DO: try other ways to handle word not in list
+      // TO DO: refactor keyboard keys listing
 
       if (event.key === "Enter") {
-        if (!isWordInList(currentGuess)) {
-          //setIsValidWord(false);
-        }
-
         if (currentGuess.length !== 5) {
           return;
         }
@@ -70,16 +66,21 @@ function App() {
     fetchWord();
   }, []);
 
+  //let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
+  // let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
+  // let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
+
   return (
-    <div onFocus={true} h={100}>
+    <Box h={100}>
       <Center>
         <Heading as="h3" size="lg" mb={3} mt={2}>
           Wordle Clone
         </Heading>
       </Center>
-      <div className="bar"></div>
 
-      {triesCount === 6 && (
+      <Divider />
+
+      {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
             <Text as="b" textTransform="uppercase">
@@ -89,7 +90,17 @@ function App() {
         </Center>
       )}
 
-      {isGameOver && (
+      {triesCount === 6 && isGameOver && (
+        <Center>
+          <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
+            <Text as="b" textTransform="uppercase">
+              Great!
+            </Text>
+          </Box>
+        </Center>
+      )}
+
+      {isGameOver && triesCount < 6 && (
         <Center>
           <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
             <Text as="b">Great!</Text>
@@ -105,8 +116,8 @@ function App() {
         </Center>
       )}
 
-      <div className="tiles-container">
-        <div className="table">
+      <Box className="tiles-container" mt={10}>
+        <Box className="table">
           {guesses.map((guess, i) => {
             const isCurrentGuess =
               i === guesses.findIndex((val) => val == null);
@@ -118,9 +129,321 @@ function App() {
               />
             );
           })}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+
+      {/* Keyboard layout below */}
+      <Box
+        pos="fixed"
+        bottom={0}
+        mb={3}
+        left="50%"
+        className="keyboard-container"
+        id="keyboard-container"
+      >
+        <Center>
+          <Flex gap={1} mt={1} id="rowOne">
+            <Box
+              id="q"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              q
+            </Box>
+            <Box
+              id="w"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              w
+            </Box>
+            <Box
+              id="e"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              e
+            </Box>
+            <Box
+              id="r"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              r
+            </Box>
+            <Box
+              id="t"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              t
+            </Box>
+            <Box
+              id="y"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              y
+            </Box>
+            <Box
+              id="u"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              u
+            </Box>
+            <Box
+              id="i"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              i
+            </Box>
+            <Box
+              id="o"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              o
+            </Box>
+            <Box
+              id="p"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              p
+            </Box>
+          </Flex>
+        </Center>
+        <Center>
+          <Flex gap={1} mt={1} id="rowTwo">
+            <Box
+              id="a"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              a
+            </Box>
+            <Box
+              id="s"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              s
+            </Box>
+            <Box
+              id="d"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              d
+            </Box>
+            <Box
+              id="f"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              f
+            </Box>
+            <Box
+              id="g"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              g
+            </Box>
+            <Box
+              id="h"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              h
+            </Box>
+            <Box
+              id="j"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              j
+            </Box>
+            <Box
+              id="k"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              k
+            </Box>
+            <Box
+              id="l"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              l
+            </Box>
+          </Flex>
+        </Center>
+        <Center>
+          <Flex gap={1} mt={1} id="rowThree">
+            <Box
+              id="z"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              z
+            </Box>
+            <Box
+              id="x"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              x
+            </Box>
+            <Box
+              id="c"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              c
+            </Box>
+            <Box
+              id="v"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              v
+            </Box>
+            <Box
+              id="b"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              b
+            </Box>
+            <Box
+              id="n"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              n
+            </Box>
+            <Box
+              id="m"
+              w={6}
+              h={6}
+              textAlign="center"
+              rounded="sm"
+              fontWeight="semibold"
+              color="gray.600"
+            >
+              m
+            </Box>
+          </Flex>
+        </Center>
+      </Box>
+      <Center pos="fixed" left="49%" bottom={0} pb={1}>
+        by nl
+      </Center>
+    </Box>
   );
 }
 
@@ -131,7 +454,7 @@ function isWordInList(guess) {
   return false;
 }
 
-function Line({ guess, isFinal, chosenWord, isValidWord }) {
+function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
   for (let i = 0; i < 5; i++) {
@@ -154,23 +477,31 @@ function Line({ guess, isFinal, chosenWord, isValidWord }) {
         let animationDelayDuration = " animation-delay-" + i * 200;
         className += animationDelayDuration;
 
-        // add colors
+        // add background colors
         if (char === chosenWord[i]) {
+          // to tiles
           className += " correct";
+          // to keyboard keys
+          document.getElementById(char).style.background = "#5a9c51";
+          document.getElementById(char).style.color = "white";
         } else if (chosenWord.includes(char)) {
           className += " close";
+          document.getElementById(char).style.background = "#bea647";
+          document.getElementById(char).style.color = "white";
         } else {
           className += " incorrect";
+          document.getElementById(char).style.background = "#65696b";
+          document.getElementById(char).style.color = "white";
         }
       }
     }
 
     tiles.push(
-      <div key={i} className={className}>
+      <Box key={i} className={className}>
         {char}
-      </div>
+      </Box>
     );
     className = "tile";
   }
-  return <div className="line">{tiles}</div>;
+  return <Box className="line">{tiles}</Box>;
 }
