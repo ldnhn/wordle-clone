@@ -1,7 +1,7 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center, Box, Text, Flex } from "@chakra-ui/react";
+import { Heading, Center, Box, Text, Flex, Divider } from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -16,14 +16,10 @@ function App() {
         return;
       }
 
-      // TO DO: add keyboard
-      // try other ways to handle word not in list
+      // TO DO: try other ways to handle word not in list
+      // TO DO: refactor keyboard keys listing
 
       if (event.key === "Enter") {
-        if (!isWordInList(currentGuess)) {
-          //setIsValidWord(false);
-        }
-
         if (currentGuess.length !== 5) {
           return;
         }
@@ -70,6 +66,10 @@ function App() {
     fetchWord();
   }, []);
 
+  //let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
+  // let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
+  // let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
+
   return (
     <Box h={100}>
       <Center>
@@ -77,7 +77,8 @@ function App() {
           Wordle Clone
         </Heading>
       </Center>
-      <div className="bar"></div>
+
+      <Divider />
 
       {triesCount === 6 && !isGameOver && (
         <Center>
@@ -115,8 +116,8 @@ function App() {
         </Center>
       )}
 
-      <div className="tiles-container" mt={10}>
-        <div className="table">
+      <Box className="tiles-container" mt={10}>
+        <Box className="table">
           {guesses.map((guess, i) => {
             const isCurrentGuess =
               i === guesses.findIndex((val) => val == null);
@@ -128,18 +129,20 @@ function App() {
               />
             );
           })}
-        </div>
-      </div>
+        </Box>
+      </Box>
 
+      {/* Keyboard layout below */}
       <Box
         pos="fixed"
         bottom={0}
         mb={3}
         left="50%"
         className="keyboard-container"
+        id="keyboard-container"
       >
         <Center>
-          <Flex gap={1} mt={1}>
+          <Flex gap={1} mt={1} id="rowOne">
             <Box
               id="q"
               w={6}
@@ -253,7 +256,7 @@ function App() {
           </Flex>
         </Center>
         <Center>
-          <Flex gap={1} mt={1}>
+          <Flex gap={1} mt={1} id="rowTwo">
             <Box
               id="a"
               w={6}
@@ -356,7 +359,7 @@ function App() {
           </Flex>
         </Center>
         <Center>
-          <Flex gap={1} mt={1}>
+          <Flex gap={1} mt={1} id="rowThree">
             <Box
               id="z"
               w={6}
@@ -474,9 +477,11 @@ function Line({ guess, isFinal, chosenWord }) {
         let animationDelayDuration = " animation-delay-" + i * 200;
         className += animationDelayDuration;
 
-        // add colors
+        // add background colors
         if (char === chosenWord[i]) {
+          // to tiles
           className += " correct";
+          // to keyboard keys
           document.getElementById(char).style.background = "#5a9c51";
           document.getElementById(char).style.color = "white";
         } else if (chosenWord.includes(char)) {
@@ -492,11 +497,11 @@ function Line({ guess, isFinal, chosenWord }) {
     }
 
     tiles.push(
-      <div key={i} className={className}>
+      <Box key={i} className={className}>
         {char}
-      </div>
+      </Box>
     );
     className = "tile";
   }
-  return <div className="line">{tiles}</div>;
+  return <Box className="line">{tiles}</Box>;
 }
