@@ -66,12 +66,12 @@ function App() {
     fetchWord();
   }, []);
 
-  //let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
-  // let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
-  // let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
+  let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
+  let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
+  let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
   return (
-    <Box h={100}>
+    <Box h="calc(100vh)">
       <Center>
         <Heading as="h3" size="lg" mb={3} mt={2}>
           Wordle Clone
@@ -134,7 +134,7 @@ function App() {
 
       {/* Keyboard layout below */}
       <Box
-        pos="fixed"
+        pos="absolute"
         bottom={0}
         mb={3}
         left="50%"
@@ -143,300 +143,53 @@ function App() {
       >
         <Center>
           <Flex gap={1} mt={1} id="rowOne">
-            <Box
-              id="q"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              q
-            </Box>
-            <Box
-              id="w"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              w
-            </Box>
-            <Box
-              id="e"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              e
-            </Box>
-            <Box
-              id="r"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              r
-            </Box>
-            <Box
-              id="t"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              t
-            </Box>
-            <Box
-              id="y"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              y
-            </Box>
-            <Box
-              id="u"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              u
-            </Box>
-            <Box
-              id="i"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              i
-            </Box>
-            <Box
-              id="o"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              o
-            </Box>
-            <Box
-              id="p"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              p
-            </Box>
+            {firstRowKeys.map((item) => (
+              <Box
+                id={item}
+                w={6}
+                h={6}
+                textAlign="center"
+                rounded="sm"
+                fontWeight="semibold"
+                color="gray.600"
+              >
+                {item}
+              </Box>
+            ))}
           </Flex>
         </Center>
         <Center>
           <Flex gap={1} mt={1} id="rowTwo">
-            <Box
-              id="a"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              a
-            </Box>
-            <Box
-              id="s"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              s
-            </Box>
-            <Box
-              id="d"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              d
-            </Box>
-            <Box
-              id="f"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              f
-            </Box>
-            <Box
-              id="g"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              g
-            </Box>
-            <Box
-              id="h"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              h
-            </Box>
-            <Box
-              id="j"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              j
-            </Box>
-            <Box
-              id="k"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              k
-            </Box>
-            <Box
-              id="l"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              l
-            </Box>
+            {secondRowKeys.map((item) => (
+              <Box
+                id={item}
+                w={6}
+                h={6}
+                textAlign="center"
+                rounded="sm"
+                fontWeight="semibold"
+                color="gray.600"
+              >
+                {item}
+              </Box>
+            ))}
           </Flex>
         </Center>
         <Center>
           <Flex gap={1} mt={1} id="rowThree">
-            <Box
-              id="z"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              z
-            </Box>
-            <Box
-              id="x"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              x
-            </Box>
-            <Box
-              id="c"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              c
-            </Box>
-            <Box
-              id="v"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              v
-            </Box>
-            <Box
-              id="b"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              b
-            </Box>
-            <Box
-              id="n"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              n
-            </Box>
-            <Box
-              id="m"
-              w={6}
-              h={6}
-              textAlign="center"
-              rounded="sm"
-              fontWeight="semibold"
-              color="gray.600"
-            >
-              m
-            </Box>
+            {thirdRowKeys.map((item) => (
+              <Box
+                id={item}
+                w={6}
+                h={6}
+                textAlign="center"
+                rounded="sm"
+                fontWeight="semibold"
+                color="gray.600"
+              >
+                {item}
+              </Box>
+            ))}
           </Flex>
         </Center>
       </Box>
