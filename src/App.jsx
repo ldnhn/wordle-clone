@@ -20,6 +20,7 @@ function App() {
       // TO DO: refactor keyboard keys listing
 
       if (event.key === "Enter") {
+        // handle keydown and game state
         if (currentGuess.length !== 5) {
           return;
         }
@@ -80,6 +81,7 @@ function App() {
 
       <Divider />
 
+      {/* game notification */}
       {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
@@ -116,6 +118,7 @@ function App() {
         </Center>
       )}
 
+      {/* 6 line of tiles here */}
       <Box className="tiles-container" mt={10}>
         <Box className="table">
           {guesses.map((guess, i) => {
@@ -193,6 +196,8 @@ function App() {
           </Flex>
         </Center>
       </Box>
+      {/* end of keyboard layout */}
+
       <Center pos="fixed" left="49%" bottom={0} pb={1}>
         by nl
       </Center>
@@ -207,6 +212,7 @@ function isWordInList(guess) {
   return false;
 }
 
+// handle current line that player's on
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
