@@ -169,3 +169,40 @@
 .keyboard-container {
   transform: translate(-50%, -50%);
 }
+
+.win {
+  animation: winning 0.6s ease-in-out forwards;
+}
+
+@keyframes winning {
+  0% {
+    transform: translateY(-15px);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+  25% {
+    transform: translateY(-25px);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+  50% {
+    transform: translateY(-15px);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+  75% {
+    transform: translateY(3px);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+  100% {
+    transform: translateY(0px);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
+  }
+}

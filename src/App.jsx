@@ -17,7 +17,6 @@ function App() {
       }
 
       // TO DO: try other ways to handle word not in list
-      // TO DO: refactor keyboard keys listing
 
       if (event.key === "Enter") {
         // handle keydown and game state
@@ -219,27 +218,33 @@ function Line({ guess, isFinal, chosenWord }) {
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
+    let animationDelayDuration = " animation-delay-" + i * 200;
 
     // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null";
     }
 
-    // add color to tiles
+    // add colors & animations to tiles
     if (isFinal) {
       className = "tile";
 
-      // add jiggle animation
+      // winning animation
+      if (guess === chosenWord) {
+        className += " win";
+      }
+
+      // jiggle animation
       if (!isWordInList(guess)) {
         className += " jiggle";
       } else {
-        let animationDelayDuration = " animation-delay-" + i * 200;
         className += animationDelayDuration;
 
         // add background colors
         if (char === chosenWord[i]) {
           // to tiles
           className += " correct";
+
           // to keyboard keys
           document.getElementById(char).style.background = "#5a9c51";
           document.getElementById(char).style.color = "white";
