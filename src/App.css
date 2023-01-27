@@ -31,17 +31,17 @@
 }
 
 .correct {
-  animation: correct-flip 0.6s ease-in-out forwards;
+  animation: correct-flip 0.65s ease-in-out forwards;
   border: 2px solid rgb(101, 105, 107);
 }
 
 .incorrect {
-  animation: incorrect-flip 0.6s ease-in-out forwards;
+  animation: incorrect-flip 0.65s ease-in-out forwards;
   border: 2px solid rgb(101, 105, 107);
 }
 
 .close {
-  animation: close-flip 0.6s ease-in-out forwards;
+  animation: close-flip 0.65s ease-in-out forwards;
   border: 2px solid rgb(101, 105, 107);
 }
 
@@ -115,11 +115,14 @@
 @keyframes correct-flip {
   0% {
     transform: scaleY(1);
+    color: white;
   }
 
   50% {
-    background: white;
     transform: scaleY(0);
+    background: rgb(90, 156, 81);
+    border: 2px solid rgb(90, 156, 81);
+    color: white;
   }
 
   100% {
@@ -133,11 +136,14 @@
 @keyframes incorrect-flip {
   0% {
     transform: scaleY(1);
+    color: white;
   }
 
   50% {
-    background: white;
     transform: scaleY(0);
+    background: rgb(101, 105, 107);
+    border: 2px solid rgb(101, 105, 107);
+    color: white;
   }
 
   100% {
@@ -151,11 +157,14 @@
 @keyframes close-flip {
   0% {
     transform: scaleY(1);
+    color: white;
   }
 
   50% {
-    background: white;
     transform: scaleY(0);
+    background: rgb(190, 167, 71);
+    border: 2px solid rgb(190, 167, 71);
+    color: white;
   }
 
   100% {
@@ -171,7 +180,7 @@
 }
 
 .win {
-  animation: winning 0.6s ease-in-out forwards;
+  animation: winning 0.65s ease-in-out forwards;
 }
 
 @keyframes winning {
