@@ -1,3 +1,9 @@
+:root {
+  --green: rgb(90, 156, 81);
+  --yellow: rgb(190, 167, 71);
+  --gray: rgb(101, 105, 107);
+}
+
 .tiles-container {
   justify-content: space-around;
   display: flex;
@@ -27,26 +33,11 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  transition: 0.2s ease-in-out;
+  transition: 0.25s ease-in-out;
 }
 
-.correct {
-  animation: correct-flip 0.65s ease-in-out forwards;
-  border: 2px solid rgb(101, 105, 107);
-}
-
-.incorrect {
-  animation: incorrect-flip 0.65s ease-in-out forwards;
-  border: 2px solid rgb(101, 105, 107);
-}
-
-.close {
-  animation: close-flip 0.65s ease-in-out forwards;
-  border: 2px solid rgb(101, 105, 107);
-}
-
-.not-null {
-  border: 2px solid rgb(101, 105, 107);
+.not-null-tile {
+  border: 2px solid var(--gray);
   width: 65px;
   height: 65px;
   font-weight: bolder;
@@ -56,6 +47,45 @@
   align-items: center;
   text-transform: uppercase;
   animation: zoom-in-out 0.2s ease-in-out;
+}
+
+.correct {
+  animation: tile-flip 0.65s ease-in-out forwards;
+  border: 2px solid var(--gray);
+  --background: var(--green);
+}
+
+.incorrect {
+  animation: tile-flip 0.65s ease-in-out forwards;
+  border: 2px solid var(--gray);
+  --background: var(--gray);
+}
+
+.close {
+  animation: tile-flip 0.65s ease-in-out forwards;
+  border: 2px solid var(--gray);
+  --background: var(--yellow);
+}
+
+@keyframes tile-flip {
+  0% {
+    transform: scaleY(1);
+    color: white;
+  }
+
+  50% {
+    transform: scaleY(0);
+    background: var(--background);
+    border: 2px solid var(--background);
+    color: white;
+  }
+
+  100% {
+    transform: scaleY(1);
+    background: var(--background);
+    border: 2px solid var(--background);
+    color: white;
+  }
 }
 
 @keyframes zoom-in-out {
@@ -70,23 +100,23 @@
   }
 }
 
-.animation-delay-0 {
+.delay-0 {
   animation-delay: 0s;
 }
 
-.animation-delay-200 {
+.delay-200 {
   animation-delay: 200ms;
 }
 
-.animation-delay-400 {
+.delay-400 {
   animation-delay: 400ms;
 }
 
-.animation-delay-600 {
+.delay-600 {
   animation-delay: 600ms;
 }
 
-.animation-delay-800 {
+.delay-800 {
   animation-delay: 800ms;
 }
 
@@ -112,106 +142,32 @@
   }
 }
 
-@keyframes correct-flip {
-  0% {
-    transform: scaleY(1);
-    color: white;
-  }
-
-  50% {
-    transform: scaleY(0);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
-    color: white;
-  }
-
-  100% {
-    transform: scaleY(1);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
-    color: white;
-  }
-}
-
-@keyframes incorrect-flip {
-  0% {
-    transform: scaleY(1);
-    color: white;
-  }
-
-  50% {
-    transform: scaleY(0);
-    background: rgb(101, 105, 107);
-    border: 2px solid rgb(101, 105, 107);
-    color: white;
-  }
-
-  100% {
-    transform: scaleY(1);
-    background: rgb(101, 105, 107);
-    border: 2px solid rgb(101, 105, 107);
-    color: white;
-  }
-}
-
-@keyframes close-flip {
-  0% {
-    transform: scaleY(1);
-    color: white;
-  }
-
-  50% {
-    transform: scaleY(0);
-    background: rgb(190, 167, 71);
-    border: 2px solid rgb(190, 167, 71);
-    color: white;
-  }
-
-  100% {
-    transform: scaleY(1);
-    background: rgb(190, 167, 71);
-    border: 2px solid rgb(190, 167, 71);
-    color: white;
-  }
-}
-
 .keyboard-container {
   transform: translate(-50%, -50%);
 }
 
 .win {
   animation: winning 0.65s ease-in-out forwards;
+  --background: rgb(90, 156, 81);
 }
 
 @keyframes winning {
   0% {
     transform: translateY(-15px);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
-    color: white;
-  }
-  25% {
-    transform: translateY(-25px);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
+    background: var(--background);
+    border: 2px solid var(--background);
     color: white;
   }
   50% {
-    transform: translateY(-15px);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
-    color: white;
-  }
-  75% {
-    transform: translateY(3px);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
+    transform: translateY(-25px);
+    background: var(--background);
+    border: 2px solid var(--background);
     color: white;
   }
   100% {
     transform: translateY(0px);
-    background: rgb(90, 156, 81);
-    border: 2px solid rgb(90, 156, 81);
+    background: var(--background);
+    border: 2px solid var(--background);
     color: white;
   }
 }

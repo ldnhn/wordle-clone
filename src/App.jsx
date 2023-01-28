@@ -218,11 +218,11 @@ function Line({ guess, isFinal, chosenWord }) {
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
-    let animationDelayDuration = " animation-delay-" + i * 200;
+    let animationDelayDuration = " delay-" + i * 200;
 
     // add zoom animation to tiles when typing
     if (char != null) {
-      className = "not-null";
+      className = "not-null-tile";
     }
 
     // add colors & animations to tiles
