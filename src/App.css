@@ -4,24 +4,6 @@
   --gray: rgb(101, 105, 107);
 }
 
-.tiles-container {
-  justify-content: space-around;
-  display: flex;
-}
-
-.table {
-  top: 150px;
-  display: flex;
-  gap: 5px;
-  flex-direction: column;
-  position: absolute;
-}
-
-.line {
-  display: flex;
-  gap: 5px;
-}
-
 .tile {
   width: 65px;
   height: 65px;
@@ -46,7 +28,19 @@
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  animation: zoom-in-out 0.2s ease-in-out;
+  animation: tile-zoom-in-out 0.2s ease-in-out;
+}
+
+@keyframes tile-zoom-in-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .correct {
@@ -85,18 +79,6 @@
     background: var(--background);
     border: 2px solid var(--background);
     color: white;
-  }
-}
-
-@keyframes zoom-in-out {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 
@@ -140,10 +122,6 @@
   100% {
     transform: translateX(0px);
   }
-}
-
-.keyboard-container {
-  transform: translate(-50%, -50%);
 }
 
 .win {
