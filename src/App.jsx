@@ -17,9 +17,9 @@ function App() {
       }
 
       // TO DO: try other ways to handle word not in list
-      // TO DO: refactor keyboard keys listing
 
       if (event.key === "Enter") {
+        // handle keydown and game state
         if (currentGuess.length !== 5) {
           return;
         }
@@ -80,6 +80,7 @@ function App() {
 
       <Divider />
 
+      {/* game notification */}
       {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
@@ -116,6 +117,7 @@ function App() {
         </Center>
       )}
 
+      {/* 6 line of tiles here */}
       <Box className="tiles-container" mt={10}>
         <Box className="table">
           {guesses.map((guess, i) => {
@@ -193,6 +195,8 @@ function App() {
           </Flex>
         </Center>
       </Box>
+      {/* end of keyboard layout */}
+
       <Center pos="fixed" left="49%" bottom={0} pb={1}>
         by nl
       </Center>
@@ -207,33 +211,40 @@ function isWordInList(guess) {
   return false;
 }
 
+// handle current line that player's on
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
+    let animationDelayDuration = " animation-delay-" + i * 200;
 
     // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null";
     }
 
-    // add color to tiles
+    // add colors & animations to tiles
     if (isFinal) {
       className = "tile";
 
-      // add jiggle animation
+      // winning animation
+      if (guess === chosenWord) {
+        className += " win";
+      }
+
+      // jiggle animation
       if (!isWordInList(guess)) {
         className += " jiggle";
       } else {
-        let animationDelayDuration = " animation-delay-" + i * 200;
         className += animationDelayDuration;
 
         // add background colors
         if (char === chosenWord[i]) {
           // to tiles
           className += " correct";
+
           // to keyboard keys
           document.getElementById(char).style.background = "#5a9c51";
           document.getElementById(char).style.color = "white";
