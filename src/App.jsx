@@ -1,7 +1,20 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center, Box, Text, Flex, Divider } from "@chakra-ui/react";
+import {
+  Heading,
+  Center,
+  Box,
+  Text,
+  Flex,
+  Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Slide,
+} from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -9,6 +22,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [triesCount, setTriesCount] = useState(0);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const handleType = (event) => {
@@ -70,6 +84,10 @@ function App() {
   let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
+  useEffect(() => {
+    setTimeout(() => setShowModal(false), 5000);
+  });
+
   return (
     <Box h="calc(100vh)">
       <Center>
@@ -80,7 +98,6 @@ function App() {
 
       <Divider />
 
-      {/* game notification */}
       {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
@@ -89,6 +106,66 @@ function App() {
             </Text>
           </Box>
         </Center>
+      )}
+
+      {showModal && (
+        <>
+          <Slide direction="top" in style={{ zIndex: 10 }}>
+            <Modal isOpen>
+              <ModalOverlay />
+              <ModalContent>
+                <Center>
+                  <ModalHeader>
+                    <Heading as="h3" size="lg">
+                      Welcome
+                    </Heading>
+                  </ModalHeader>
+                </Center>
+                <ModalBody>
+                  <Text>
+                    You got
+                    <span style={{ fontWeight: "bold" }}> 6 guesses </span>
+                    to find a{" "}
+                    <span style={{ fontWeight: "bold" }}>five-letter-word</span>
+                    .
+                  </Text>
+                  <Divider />
+
+                  <Text>
+                    Correct position turns{" "}
+                    <span
+                      style={{ color: "rgb(90, 156, 81)", fontWeight: "bold" }}
+                    >
+                      green
+                    </span>
+                    .
+                  </Text>
+                  <Text>
+                    Wrong position turns{" "}
+                    <span
+                      style={{ color: "rgb(190, 167, 71)", fontWeight: "bold" }}
+                    >
+                      yellow
+                    </span>
+                    .
+                  </Text>
+                  <Text>
+                    Wrong letter turns{" "}
+                    <span style={{ color: "gray", fontWeight: "bold" }}>
+                      gray
+                    </span>
+                    .
+                  </Text>
+                  <Divider />
+                  <br />
+                  <Center>
+                    <Text fontWeight="bold">Good luck!</Text>
+                  </Center>
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+          </Slide>
+        </>
       )}
 
       {triesCount === 6 && isGameOver && (
