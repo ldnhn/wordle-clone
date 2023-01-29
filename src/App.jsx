@@ -86,6 +86,7 @@ function App() {
   let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
+  // hide modal after 5000ms
   useEffect(() => {
     setTimeout(() => setShowModal(false), 5000);
   });
@@ -110,6 +111,7 @@ function App() {
         </Center>
       )}
 
+      {/* show modal */}
       {showModal && (
         <>
           <Slide direction="top" in style={{ zIndex: 10 }}>
@@ -136,43 +138,22 @@ function App() {
                     </Text>
                   </Center>
                   <Divider />
+
                   <Center>
                     <UnorderedList>
                       <ListItem>
-                        <Text>
-                          Correct position turns{" "}
-                          <span
-                            style={{
-                              color: "rgb(90, 156, 81)",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            green
-                          </span>
-                          .
+                        <Text as="b" color="#5a9c51">
+                          Correct position.
                         </Text>
                       </ListItem>
                       <ListItem>
-                        <Text>
-                          Wrong position turns{" "}
-                          <span
-                            style={{
-                              color: "rgb(190, 167, 71)",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            yellow
-                          </span>
-                          .
+                        <Text as="b" color="#bea647">
+                          Wrong position.
                         </Text>
                       </ListItem>
                       <ListItem>
-                        <Text>
-                          Wrong letter turns{" "}
-                          <span style={{ color: "gray", fontWeight: "bold" }}>
-                            gray
-                          </span>
-                          .
+                        <Text as="b" color="#65696b">
+                          Wrong letter.
                         </Text>
                       </ListItem>
                     </UnorderedList>
@@ -181,7 +162,7 @@ function App() {
                   <Divider />
                   <br />
                   <Center>
-                    <Text fontWeight="bold">Good luck!</Text>
+                    <Text as="b">Good luck!</Text>
                   </Center>
                 </ModalBody>
               </ModalContent>
