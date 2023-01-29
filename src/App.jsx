@@ -14,6 +14,8 @@ import {
   ModalHeader,
   ModalBody,
   Slide,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
 
 function App() {
@@ -122,40 +124,60 @@ function App() {
                   </ModalHeader>
                 </Center>
                 <ModalBody>
-                  <Text>
-                    You got
-                    <span style={{ fontWeight: "bold" }}> 6 guesses </span>
-                    to find a{" "}
-                    <span style={{ fontWeight: "bold" }}>five-letter-word</span>
-                    .
-                  </Text>
+                  <Center>
+                    <Text>
+                      You got
+                      <span style={{ fontWeight: "bold" }}> 6 guesses </span>
+                      to find a{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        five-letter-word
+                      </span>
+                      .
+                    </Text>
+                  </Center>
                   <Divider />
+                  <Center>
+                    <UnorderedList>
+                      <ListItem>
+                        <Text>
+                          Correct position turns{" "}
+                          <span
+                            style={{
+                              color: "rgb(90, 156, 81)",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            green
+                          </span>
+                          .
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Wrong position turns{" "}
+                          <span
+                            style={{
+                              color: "rgb(190, 167, 71)",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            yellow
+                          </span>
+                          .
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text>
+                          Wrong letter turns{" "}
+                          <span style={{ color: "gray", fontWeight: "bold" }}>
+                            gray
+                          </span>
+                          .
+                        </Text>
+                      </ListItem>
+                    </UnorderedList>
+                  </Center>
 
-                  <Text>
-                    Correct position turns{" "}
-                    <span
-                      style={{ color: "rgb(90, 156, 81)", fontWeight: "bold" }}
-                    >
-                      green
-                    </span>
-                    .
-                  </Text>
-                  <Text>
-                    Wrong position turns{" "}
-                    <span
-                      style={{ color: "rgb(190, 167, 71)", fontWeight: "bold" }}
-                    >
-                      yellow
-                    </span>
-                    .
-                  </Text>
-                  <Text>
-                    Wrong letter turns{" "}
-                    <span style={{ color: "gray", fontWeight: "bold" }}>
-                      gray
-                    </span>
-                    .
-                  </Text>
                   <Divider />
                   <br />
                   <Center>
