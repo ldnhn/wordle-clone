@@ -118,8 +118,14 @@ function App() {
       )}
 
       {/* 6 line of tiles here */}
-      <Box className="tiles-container" mt={10}>
-        <Box className="table">
+      <Box display="flex" justifyContent="space-around" mt={10}>
+        <Box
+          top={150}
+          display="flex"
+          flexDirection="column"
+          gap="5px"
+          pos="absolute"
+        >
           {guesses.map((guess, i) => {
             const isCurrentGuess =
               i === guesses.findIndex((val) => val == null);
@@ -135,71 +141,62 @@ function App() {
       </Box>
 
       {/* Keyboard layout below */}
-      <Box
-        pos="absolute"
-        bottom={0}
-        mb={3}
-        left="50%"
-        className="keyboard-container"
-        id="keyboard-container"
-      >
-        <Center>
-          <Flex gap={1} mt={1} id="rowOne">
-            {firstRowKeys.map((item) => (
-              <Box
-                id={item}
-                w={6}
-                h={6}
-                textAlign="center"
-                rounded="sm"
-                fontWeight="semibold"
-                color="gray.600"
-              >
-                {item}
-              </Box>
-            ))}
-          </Flex>
-        </Center>
-        <Center>
-          <Flex gap={1} mt={1} id="rowTwo">
-            {secondRowKeys.map((item) => (
-              <Box
-                id={item}
-                w={6}
-                h={6}
-                textAlign="center"
-                rounded="sm"
-                fontWeight="semibold"
-                color="gray.600"
-              >
-                {item}
-              </Box>
-            ))}
-          </Flex>
-        </Center>
-        <Center>
-          <Flex gap={1} mt={1} id="rowThree">
-            {thirdRowKeys.map((item) => (
-              <Box
-                id={item}
-                w={6}
-                h={6}
-                textAlign="center"
-                rounded="sm"
-                fontWeight="semibold"
-                color="gray.600"
-              >
-                {item}
-              </Box>
-            ))}
-          </Flex>
-        </Center>
+      <Box display="flex" justifyContent="center">
+        <Box pos="absolute" mb={3} top={650} pb={1}>
+          <Center>
+            <Flex gap={1} mt={1} id="rowOne">
+              {firstRowKeys.map((item) => (
+                <Box
+                  id={item}
+                  w={6}
+                  h={6}
+                  textAlign="center"
+                  rounded="sm"
+                  fontWeight="semibold"
+                  color="gray.600"
+                >
+                  {item}
+                </Box>
+              ))}
+            </Flex>
+          </Center>
+          <Center>
+            <Flex gap={1} mt={1} id="rowTwo">
+              {secondRowKeys.map((item) => (
+                <Box
+                  id={item}
+                  w={6}
+                  h={6}
+                  textAlign="center"
+                  rounded="sm"
+                  fontWeight="semibold"
+                  color="gray.600"
+                >
+                  {item}
+                </Box>
+              ))}
+            </Flex>
+          </Center>
+          <Center>
+            <Flex gap={1} mt={1} id="rowThree">
+              {thirdRowKeys.map((item) => (
+                <Box
+                  id={item}
+                  w={6}
+                  h={6}
+                  textAlign="center"
+                  rounded="sm"
+                  fontWeight="semibold"
+                  color="gray.600"
+                >
+                  {item}
+                </Box>
+              ))}
+            </Flex>
+          </Center>
+        </Box>
       </Box>
       {/* end of keyboard layout */}
-
-      <Center pos="fixed" left="49%" bottom={0} pb={1}>
-        by nl
-      </Center>
     </Box>
   );
 }
@@ -218,11 +215,11 @@ function Line({ guess, isFinal, chosenWord }) {
   for (let i = 0; i < 5; i++) {
     const char = guess[i];
     let className = "tile";
-    let animationDelayDuration = " animation-delay-" + i * 200;
+    let animationDelayDuration = " delay-" + i * 200;
 
     // add zoom animation to tiles when typing
     if (char != null) {
-      className = "not-null";
+      className = "not-null-tile";
     }
 
     // add colors & animations to tiles
@@ -267,5 +264,9 @@ function Line({ guess, isFinal, chosenWord }) {
     );
     className = "tile";
   }
-  return <Box className="line">{tiles}</Box>;
+  return (
+    <Box display="flex" gap="5px">
+      {tiles}
+    </Box>
+  );
 }
