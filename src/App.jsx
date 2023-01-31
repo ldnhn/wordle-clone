@@ -35,7 +35,6 @@ function App() {
       // TO DO: try other ways to handle word not in list
 
       if (event.key === "Enter") {
-        // handle keydown and game state
         if (currentGuess.length !== 5) {
           return;
         }
@@ -46,8 +45,8 @@ function App() {
         setTriesCount(triesCount + 1);
         setCurrentGuess("");
 
-        const isCorrect = chosenWord === currentGuess;
-        if (isCorrect) {
+        const isWinning = currentGuess === chosenWord;
+        if (isWinning) {
           setIsGameOver(true);
         }
       }
@@ -71,22 +70,20 @@ function App() {
     return () => window.removeEventListener("keydown", handleType);
   }, [currentGuess, isGameOver, chosenWord, guesses, triesCount]);
 
-  // get a random word from static file wordleList.json
   useEffect(() => {
-    const fetchWord = async () => {
-      const randomWord = await wordList[
+    const fetchChosenWord = async () => {
+      const random = await wordList[
         Math.floor(Math.random() * wordList.length)
       ];
-      setChosenWord(randomWord);
+      setChosenWord(random);
     };
-    fetchWord();
+    fetchChosenWord();
   }, []);
 
   let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
   let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
-  // hide modal after 5000ms
   useEffect(() => {
     setTimeout(() => setShowModal(false), 5000);
   });
@@ -111,7 +108,6 @@ function App() {
         </Center>
       )}
 
-      {/* show modal */}
       {showModal && (
         <>
           <Slide direction="top" in style={{ zIndex: 10 }}>
@@ -197,7 +193,6 @@ function App() {
         </Center>
       )}
 
-      {/* 6 line of tiles here */}
       <Box display="flex" justifyContent="space-around" mt={10}>
         <Box
           top={150}
@@ -220,7 +215,6 @@ function App() {
         </Box>
       </Box>
 
-      {/* Keyboard layout below */}
       <Box display="flex" justifyContent="center">
         <Box pos="absolute" mb={3} top={650} pb={1}>
           <Center>
@@ -276,7 +270,6 @@ function App() {
           </Center>
         </Box>
       </Box>
-      {/* end of keyboard layout */}
     </Box>
   );
 }
@@ -284,11 +277,12 @@ function App() {
 export default App;
 
 function isWordInList(guess) {
-  if (wordList.includes(guess)) return true;
+  if (wordList.includes(guess)) {
+    return true;
+  }
   return false;
 }
 
-// handle current line that player's on
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
@@ -297,32 +291,24 @@ function Line({ guess, isFinal, chosenWord }) {
     let className = "tile";
     let animationDelayDuration = " delay-" + i * 200;
 
-    // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null-tile";
     }
 
-    // add colors & animations to tiles
     if (isFinal) {
       className = "tile";
 
-      // winning animation
       if (guess === chosenWord) {
         className += " win";
       }
 
-      // jiggle animation
       if (!isWordInList(guess)) {
         className += " jiggle";
       } else {
         className += animationDelayDuration;
 
-        // add background colors
         if (char === chosenWord[i]) {
-          // to tiles
           className += " correct";
-
-          // to keyboard keys
           document.getElementById(char).style.background = "#5a9c51";
           document.getElementById(char).style.color = "white";
         } else if (chosenWord.includes(char)) {
