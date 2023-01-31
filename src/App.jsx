@@ -1,7 +1,22 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import { Heading, Center, Box, Text, Flex, Divider } from "@chakra-ui/react";
+import {
+  Heading,
+  Center,
+  Box,
+  Text,
+  Flex,
+  Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Slide,
+  UnorderedList,
+  ListItem,
+} from "@chakra-ui/react";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -9,6 +24,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [triesCount, setTriesCount] = useState(0);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const handleType = (event) => {
@@ -19,7 +35,6 @@ function App() {
       // TO DO: try other ways to handle word not in list
 
       if (event.key === "Enter") {
-        // handle keydown and game state
         if (currentGuess.length !== 5) {
           return;
         }
@@ -30,8 +45,8 @@ function App() {
         setTriesCount(triesCount + 1);
         setCurrentGuess("");
 
-        const isCorrect = chosenWord === currentGuess;
-        if (isCorrect) {
+        const isWinning = currentGuess === chosenWord;
+        if (isWinning) {
           setIsGameOver(true);
         }
       }
@@ -55,20 +70,23 @@ function App() {
     return () => window.removeEventListener("keydown", handleType);
   }, [currentGuess, isGameOver, chosenWord, guesses, triesCount]);
 
-  // get a random word from static file wordleList.json
   useEffect(() => {
-    const fetchWord = async () => {
-      const randomWord = await wordList[
+    const fetchChosenWord = async () => {
+      const random = await wordList[
         Math.floor(Math.random() * wordList.length)
       ];
-      setChosenWord(randomWord);
+      setChosenWord(random);
     };
-    fetchWord();
+    fetchChosenWord();
   }, []);
 
   let firstRowKeys = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
   let secondRowKeys = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
+
+  useEffect(() => {
+    setTimeout(() => setShowModal(false), 5000);
+  });
 
   return (
     <Box h="calc(100vh)">
@@ -80,7 +98,6 @@ function App() {
 
       <Divider />
 
-      {/* game notification */}
       {triesCount === 6 && !isGameOver && (
         <Center>
           <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
@@ -89,6 +106,65 @@ function App() {
             </Text>
           </Box>
         </Center>
+      )}
+
+      {showModal && (
+        <>
+          <Slide direction="top" in style={{ zIndex: 10 }}>
+            <Modal isOpen>
+              <ModalOverlay />
+              <ModalContent>
+                <Center>
+                  <ModalHeader>
+                    <Heading as="h3" size="lg">
+                      Welcome
+                    </Heading>
+                  </ModalHeader>
+                </Center>
+                <ModalBody>
+                  <Center>
+                    <Text>
+                      You got
+                      <span style={{ fontWeight: "bold" }}> 6 guesses </span>
+                      to find a{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        five-letter-word
+                      </span>
+                      .
+                    </Text>
+                  </Center>
+                  <Divider />
+
+                  <Center>
+                    <UnorderedList>
+                      <ListItem>
+                        <Text as="b" color="#5a9c51">
+                          Correct position.
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text as="b" color="#bea647">
+                          Wrong position.
+                        </Text>
+                      </ListItem>
+                      <ListItem>
+                        <Text as="b" color="#65696b">
+                          Wrong letter.
+                        </Text>
+                      </ListItem>
+                    </UnorderedList>
+                  </Center>
+
+                  <Divider />
+                  <br />
+                  <Center>
+                    <Text as="b">Good luck!</Text>
+                  </Center>
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+          </Slide>
+        </>
       )}
 
       {triesCount === 6 && isGameOver && (
@@ -117,7 +193,6 @@ function App() {
         </Center>
       )}
 
-      {/* 6 line of tiles here */}
       <Box display="flex" justifyContent="space-around" mt={10}>
         <Box
           top={150}
@@ -140,7 +215,6 @@ function App() {
         </Box>
       </Box>
 
-      {/* Keyboard layout below */}
       <Box display="flex" justifyContent="center">
         <Box pos="absolute" mb={3} top={650} pb={1}>
           <Center>
@@ -196,7 +270,6 @@ function App() {
           </Center>
         </Box>
       </Box>
-      {/* end of keyboard layout */}
     </Box>
   );
 }
@@ -204,11 +277,12 @@ function App() {
 export default App;
 
 function isWordInList(guess) {
-  if (wordList.includes(guess)) return true;
+  if (wordList.includes(guess)) {
+    return true;
+  }
   return false;
 }
 
-// handle current line that player's on
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
 
@@ -217,32 +291,24 @@ function Line({ guess, isFinal, chosenWord }) {
     let className = "tile";
     let animationDelayDuration = " delay-" + i * 200;
 
-    // add zoom animation to tiles when typing
     if (char != null) {
       className = "not-null-tile";
     }
 
-    // add colors & animations to tiles
     if (isFinal) {
       className = "tile";
 
-      // winning animation
       if (guess === chosenWord) {
         className += " win";
       }
 
-      // jiggle animation
       if (!isWordInList(guess)) {
         className += " jiggle";
       } else {
         className += animationDelayDuration;
 
-        // add background colors
         if (char === chosenWord[i]) {
-          // to tiles
           className += " correct";
-
-          // to keyboard keys
           document.getElementById(char).style.background = "#5a9c51";
           document.getElementById(char).style.color = "white";
         } else if (chosenWord.includes(char)) {
