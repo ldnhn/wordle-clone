@@ -32,8 +32,6 @@ function App() {
         return;
       }
 
-      // TO DO: try other ways to handle word not in list
-
       if (event.key === "Enter") {
         if (currentGuess.length !== 5) {
           return;
