@@ -8,15 +8,11 @@ import {
   Text,
   Flex,
   Divider,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Slide,
-  UnorderedList,
-  ListItem,
 } from "@chakra-ui/react";
+
+import KeyboardRow from "./components/keyboardRow";
+import WelcomePanel from "./components/WelcomePanel";
+import { isWordInList } from "./utils";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -87,9 +83,9 @@ function App() {
   });
 
   return (
-    <Box h="calc(100vh)">
+    <Box>
       <Center>
-        <Heading as="h3" size="lg" mb={3} mt={2}>
+        <Heading as="h3" size="lg">
           Wordle Clone
         </Heading>
       </Center>
@@ -98,7 +94,7 @@ function App() {
 
       {triesCount === 6 && !isGameOver && (
         <Center>
-          <Box color="white" p={3} mt={1} bg="gray.700" borderRadius="md">
+          <Box color="white" bg="gray.700" borderRadius="md">
             <Text as="b" textTransform="uppercase">
               {chosenWord}
             </Text>
@@ -106,68 +102,11 @@ function App() {
         </Center>
       )}
 
-      {showModal && (
-        <>
-          <Slide direction="top" in style={{ zIndex: 10 }}>
-            <Modal isOpen>
-              <ModalOverlay />
-              <ModalContent>
-                <Center>
-                  <ModalHeader>
-                    <Heading as="h3" size="lg">
-                      Welcome
-                    </Heading>
-                  </ModalHeader>
-                </Center>
-                <ModalBody>
-                  <Center>
-                    <Text>
-                      You got
-                      <span style={{ fontWeight: "bold" }}> 6 guesses </span>
-                      to find a{" "}
-                      <span style={{ fontWeight: "bold" }}>
-                        five-letter-word
-                      </span>
-                      .
-                    </Text>
-                  </Center>
-                  <Divider />
-
-                  <Center>
-                    <UnorderedList>
-                      <ListItem>
-                        <Text as="b" color="#5a9c51">
-                          Correct position.
-                        </Text>
-                      </ListItem>
-                      <ListItem>
-                        <Text as="b" color="#bea647">
-                          Wrong position.
-                        </Text>
-                      </ListItem>
-                      <ListItem>
-                        <Text as="b" color="#65696b">
-                          Wrong letter.
-                        </Text>
-                      </ListItem>
-                    </UnorderedList>
-                  </Center>
-
-                  <Divider />
-                  <br />
-                  <Center>
-                    <Text as="b">Good luck!</Text>
-                  </Center>
-                </ModalBody>
-              </ModalContent>
-            </Modal>
-          </Slide>
-        </>
-      )}
+      {showModal && <WelcomePanel/>}
 
       {triesCount === 6 && isGameOver && (
         <Center>
-          <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
+          <Box color="white" bg="green.600" borderRadius="md">
             <Text as="b" textTransform="uppercase">
               Great!
             </Text>
@@ -177,109 +116,72 @@ function App() {
 
       {isGameOver && triesCount < 6 && (
         <Center>
-          <Box color="white" p={3} mt={1} bg="green.600" borderRadius="md">
+          <Box color="white" bg="green.600" borderRadius="md">
             <Text as="b">Great!</Text>
           </Box>
         </Center>
       )}
 
-      {!isWordInList(currentGuess) && currentGuess.length === 5 && (
+      {!isWordInList(currentGuess, wordList) && currentGuess.length === 5 && (
         <Center>
-          <Box color="white" p={3} mt={1} bg="red.600" borderRadius="md">
+          <Box color="white" bg="red.600" borderRadius="md">
             <Text as="b">Word not in list</Text>
           </Box>
         </Center>
       )}
 
-      <Box display="flex" justifyContent="space-around" mt={10}>
-        <Box
-          top={150}
-          display="flex"
-          flexDirection="column"
-          gap="5px"
-          pos="absolute"
-        >
-          {guesses.map((guess, i) => {
-            const isCurrentGuess =
-              i === guesses.findIndex((val) => val == null);
-            return (
-              <Line
-                guess={isCurrentGuess ? currentGuess : guess ?? ""}
-                isFinal={!isCurrentGuess && guess != null}
-                chosenWord={chosenWord}
-              />
-            );
-          })}
+      <Box bg='tomato' w='100%' p={4} color='white'>
+        <Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="5px"
+            // pos="absolute"
+          >
+            {guesses.map((guess, i) => {
+              const isCurrentGuess =
+                i === guesses.findIndex((val) => val == null);
+              return (
+                <Line
+                  guess={isCurrentGuess ? currentGuess : guess ?? ""}
+                  isFinal={!isCurrentGuess && guess != null}
+                  chosenWord={chosenWord}
+                />
+              );
+            })}
+          </Box>
         </Box>
       </Box>
 
-      <Box display="flex" justifyContent="center">
-        <Box pos="absolute" mb={3} top={650} pb={1}>
-          <Center>
-            <Flex gap={1} mt={1} id="rowOne">
-              {firstRowKeys.map((item) => (
-                <Box
-                  id={item}
-                  w={6}
-                  h={6}
-                  textAlign="center"
-                  rounded="sm"
-                  fontWeight="semibold"
-                  color="gray.600"
-                >
-                  {item}
-                </Box>
-              ))}
-            </Flex>
-          </Center>
-          <Center>
-            <Flex gap={1} mt={1} id="rowTwo">
-              {secondRowKeys.map((item) => (
-                <Box
-                  id={item}
-                  w={6}
-                  h={6}
-                  textAlign="center"
-                  rounded="sm"
-                  fontWeight="semibold"
-                  color="gray.600"
-                >
-                  {item}
-                </Box>
-              ))}
-            </Flex>
-          </Center>
-          <Center>
-            <Flex gap={1} mt={1} id="rowThree">
-              {thirdRowKeys.map((item) => (
-                <Box
-                  id={item}
-                  w={6}
-                  h={6}
-                  textAlign="center"
-                  rounded="sm"
-                  fontWeight="semibold"
-                  color="gray.600"
-                >
-                  {item}
-                </Box>
-              ))}
-            </Flex>
-          </Center>
-        </Box>
+      <Box >
+        <Center>
+          <Flex gap={1} mt={1} id="rowOne">
+            {firstRowKeys.map((item) => (
+              <KeyboardRow key={item} id={item} text={item} />
+            ))}
+          </Flex>
+        </Center>
+        <Center>
+          <Flex gap={1} mt={1} id="rowTwo">
+            {secondRowKeys.map((item) => (
+              <KeyboardRow key={item} id={item} text={item} />
+            ))}
+          </Flex>
+        </Center>
+        <Center>
+          <Flex gap={1} mt={1} id="rowThree">
+            {thirdRowKeys.map((item) => (
+              <KeyboardRow key={item} id={item} text={item} />
+            ))}
+          </Flex>
+        </Center>
       </Box>
+
     </Box>
   );
 }
 
 export default App;
-
-function isWordInList(guess) {
-  if (wordList.includes(guess)) {
-    return true;
-  }
-  return false;
-}
 
 function Line({ guess, isFinal, chosenWord }) {
   const tiles = [];
@@ -296,11 +198,11 @@ function Line({ guess, isFinal, chosenWord }) {
     if (isFinal) {
       className = "tile";
 
-      if (guess === chosenWord) {
-        className += " win";
-      }
+      // if (guess === chosenWord) {
+      //   className += " win";
+      // }
 
-      if (!isWordInList(guess)) {
+      if (!isWordInList(guess, wordList)) {
         className += " jiggle";
       } else {
         className += animationDelayDuration;
