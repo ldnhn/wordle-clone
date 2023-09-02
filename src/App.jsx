@@ -1,18 +1,11 @@
 import "./App.css";
 import wordList from "../src/wordleList.json";
 import { useState, useEffect } from "react";
-import {
-  Heading,
-  Center,
-  Box,
-  Text,
-  Flex,
-  Divider,
-} from "@chakra-ui/react";
+import { Heading, Center, Box, Text, Flex, Divider } from "@chakra-ui/react";
 
 import KeyboardRow from "./components/keyboardRow";
 import WelcomePanel from "./components/WelcomePanel";
-import { isWordInList } from "./utils";
+import { isWordInList, Line } from "./utils";
 
 function App() {
   const [chosenWord, setChosenWord] = useState("");
@@ -79,160 +72,92 @@ function App() {
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
   useEffect(() => {
-    setTimeout(() => setShowModal(false), 5000);
-  });
+    const modalShownBefore = localStorage.getItem('modalShownBefore');
+    if (!modalShownBefore) {
+      setTimeout(() => {
+        setShowModal(false);
+        localStorage.setItem('modalShownBefore', 'true');
+      }, 2000);
+    } else {
+      setShowModal(false);
+    }
+  }, []);
 
   return (
-    <Box>
+    <>
       <Center>
         <Heading as="h3" size="lg">
           Wordle Clone
         </Heading>
       </Center>
 
-      <Divider />
-
-      {triesCount === 6 && !isGameOver && (
-        <Center>
-          <Box color="white" bg="gray.700" borderRadius="md">
-            <Text as="b" textTransform="uppercase">
-              {chosenWord}
-            </Text>
-          </Box>
-        </Center>
-      )}
+      <Divider/>
 
       {showModal && <WelcomePanel/>}
 
-      {triesCount === 6 && isGameOver && (
+      {triesCount === 6 && !isGameOver && (
         <Center>
-          <Box color="white" bg="green.600" borderRadius="md">
-            <Text as="b" textTransform="uppercase">
-              Great!
+          <Center color="white" bg="gray.700" borderRadius="md" pos="absolute" top={10}>
+            <Text as="b" textTransform="uppercase" p={1}>
+              {chosenWord}
             </Text>
-          </Box>
+          </Center>
         </Center>
       )}
 
-      {isGameOver && triesCount < 6 && (
+      {isGameOver && (
         <Center>
-          <Box color="white" bg="green.600" borderRadius="md">
-            <Text as="b">Great!</Text>
-          </Box>
+          <Center color="white" bg="green.600" borderRadius="md" pos="absolute" top={10}>
+            <Text as="b" p={1}>
+              {triesCount === 6 ? "Won!" : "Great!"}
+            </Text>
+          </Center>
         </Center>
       )}
 
-      {!isWordInList(currentGuess, wordList) && currentGuess.length === 5 && (
-        <Center>
-          <Box color="white" bg="red.600" borderRadius="md">
-            <Text as="b">Word not in list</Text>
-          </Box>
-        </Center>
+      {triesCount < 6 && (
+        !isWordInList(currentGuess, wordList) && currentGuess.length === 5 && (
+          <Center>
+            <Center color="white" bg="red.600" borderRadius="md" pos="absolute" top={10}>
+              <Text as="b" p={1}>Word not in list</Text>
+            </Center>
+          </Center>
+        )
       )}
 
-      <Box bg='tomato' w='100%' p={4} color='white'>
-        <Box>
-          <Box
-            display="flex"
-            flexDirection="column"
-            gap="5px"
-            // pos="absolute"
-          >
-            {guesses.map((guess, i) => {
-              const isCurrentGuess =
-                i === guesses.findIndex((val) => val == null);
-              return (
-                <Line
-                  guess={isCurrentGuess ? currentGuess : guess ?? ""}
-                  isFinal={!isCurrentGuess && guess != null}
-                  chosenWord={chosenWord}
-                />
-              );
-            })}
-          </Box>
+      <Center w='100%' mt={10} p={5}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="5px"
+        >
+          {guesses.map((guess, i) => {
+            const isCurrentGuess = 
+              i === guesses.findIndex((val) => val == null);
+            return (
+              <Line
+                guess={isCurrentGuess ? currentGuess : guess ?? ""}
+                isFinal={!isCurrentGuess && guess != null}
+                chosenWord={chosenWord}
+                wordList={wordList}
+              />
+            );
+          })}
         </Box>
-      </Box>
-
-      <Box >
-        <Center>
-          <Flex gap={1} mt={1} id="rowOne">
-            {firstRowKeys.map((item) => (
+      </Center>
+      
+      {[firstRowKeys, secondRowKeys, thirdRowKeys].map((rowKeys, rowIndex) => (
+        <Center key={`row-${rowIndex}`}>
+          <Flex gap={1} mt={1} id={`row${rowIndex + 1}`}>
+            {rowKeys.map((item) => (
               <KeyboardRow key={item} id={item} text={item} />
             ))}
           </Flex>
         </Center>
-        <Center>
-          <Flex gap={1} mt={1} id="rowTwo">
-            {secondRowKeys.map((item) => (
-              <KeyboardRow key={item} id={item} text={item} />
-            ))}
-          </Flex>
-        </Center>
-        <Center>
-          <Flex gap={1} mt={1} id="rowThree">
-            {thirdRowKeys.map((item) => (
-              <KeyboardRow key={item} id={item} text={item} />
-            ))}
-          </Flex>
-        </Center>
-      </Box>
-
-    </Box>
+      ))}
+      
+    </>
   );
 }
 
 export default App;
-
-function Line({ guess, isFinal, chosenWord }) {
-  const tiles = [];
-
-  for (let i = 0; i < 5; i++) {
-    const char = guess[i];
-    let className = "tile";
-    let animationDelayDuration = " delay-" + i * 200;
-
-    if (char != null) {
-      className = "not-null-tile";
-    }
-
-    if (isFinal) {
-      className = "tile";
-
-      // if (guess === chosenWord) {
-      //   className += " win";
-      // }
-
-      if (!isWordInList(guess, wordList)) {
-        className += " jiggle";
-      } else {
-        className += animationDelayDuration;
-
-        if (char === chosenWord[i]) {
-          className += " correct";
-          document.getElementById(char).style.background = "#5a9c51";
-          document.getElementById(char).style.color = "white";
-        } else if (chosenWord.includes(char)) {
-          className += " close";
-          document.getElementById(char).style.background = "#bea647";
-          document.getElementById(char).style.color = "white";
-        } else {
-          className += " incorrect";
-          document.getElementById(char).style.background = "#65696b";
-          document.getElementById(char).style.color = "white";
-        }
-      }
-    }
-
-    tiles.push(
-      <Box key={i} className={className}>
-        {char}
-      </Box>
-    );
-    className = "tile";
-  }
-  return (
-    <Box display="flex" gap="5px">
-      {tiles}
-    </Box>
-  );
-}
