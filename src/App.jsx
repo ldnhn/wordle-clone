@@ -25,15 +25,12 @@ function App() {
         if (currentGuess.length !== 5) {
           return;
         }
-
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
         setGuesses(newGuesses);
         setTriesCount(triesCount + 1);
         setCurrentGuess("");
-
-        const isWinning = currentGuess === chosenWord;
-        if (isWinning) {
+        if (currentGuess === chosenWord) {
           setIsGameOver(true);
         }
       }
@@ -77,7 +74,7 @@ function App() {
       setTimeout(() => {
         setShowModal(false);
         localStorage.setItem('modalShownBefore', 'true');
-      }, 2000);
+      }, 2500);
     } else {
       setShowModal(false);
     }
@@ -90,9 +87,7 @@ function App() {
           Wordle Clone
         </Heading>
       </Center>
-
       <Divider/>
-
       {showModal && <WelcomePanel/>}
 
       {triesCount === 6 && !isGameOver && (
@@ -126,11 +121,7 @@ function App() {
       )}
 
       <Center w='100%' mt={10} p={5}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap="5px"
-        >
+        <Box display="flex" flexDirection="column" gap="5px">
           {guesses.map((guess, i) => {
             const isCurrentGuess = 
               i === guesses.findIndex((val) => val == null);
@@ -155,7 +146,6 @@ function App() {
           </Flex>
         </Center>
       ))}
-      
     </>
   );
 }
