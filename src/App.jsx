@@ -17,22 +17,20 @@ function App() {
 
   useEffect(() => {
     const handleType = (event) => {
-      if (isGameOver) {
+      if (isGameOver)
         return;
-      }
 
       if (event.key === "Enter") {
-        if (currentGuess.length !== 5) {
+        if (currentGuess.length !== 5)
           return;
-        }
+
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
         setGuesses(newGuesses);
         setTriesCount(triesCount + 1);
         setCurrentGuess("");
-        if (currentGuess === chosenWord) {
+        if (currentGuess === chosenWord)
           setIsGameOver(true);
-        }
       }
 
       if (event.key === "Backspace") {
@@ -40,14 +38,12 @@ function App() {
         return;
       }
 
-      if (currentGuess.length >= 5) {
+      if (currentGuess.length >= 5)
         return;
-      }
 
       const isLetter = event.key.match(/^[a-z]{1}$/) != null;
-      if (isLetter) {
+      if (isLetter)
         setCurrentGuess((oldGuess) => oldGuess + event.key);
-      }
     };
 
     window.addEventListener("keydown", handleType);
