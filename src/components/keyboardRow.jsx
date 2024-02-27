@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box } from "@chakra-ui/react";
 
 const KeyboardRow = ({ id, text }) => (
   <Box
@@ -15,3 +15,4 @@ const KeyboardRow = ({ id, text }) => (
 );
 
 export default KeyboardRow;
+

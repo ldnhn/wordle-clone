@@ -17,20 +17,17 @@ function App() {
 
   useEffect(() => {
     const handleType = (event) => {
-      if (isGameOver)
-        return;
+      if (isGameOver) return;
 
       if (event.key === "Enter") {
-        if (currentGuess.length !== 5)
-          return;
+        if (currentGuess.length !== 5) return;
 
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex((val) => val == null)] = currentGuess;
         setGuesses(newGuesses);
         setTriesCount(triesCount + 1);
         setCurrentGuess("");
-        if (currentGuess === chosenWord)
-          setIsGameOver(true);
+        if (currentGuess === chosenWord) setIsGameOver(true);
       }
 
       if (event.key === "Backspace") {
@@ -38,12 +35,10 @@ function App() {
         return;
       }
 
-      if (currentGuess.length >= 5)
-        return;
+      if (currentGuess.length >= 5) return;
 
       const isLetter = event.key.match(/^[a-z]{1}$/) != null;
-      if (isLetter)
-        setCurrentGuess((oldGuess) => oldGuess + event.key);
+      if (isLetter) setCurrentGuess((oldGuess) => oldGuess + event.key);
     };
 
     window.addEventListener("keydown", handleType);
@@ -51,10 +46,8 @@ function App() {
   }, [currentGuess, isGameOver, chosenWord, guesses, triesCount]);
 
   useEffect(() => {
-    const fetchChosenWord = async () => {
-      const random = await wordList[
-        Math.floor(Math.random() * wordList.length)
-      ];
+    const fetchChosenWord = () => {
+      const random = wordList[Math.floor(Math.random() * wordList.length)];
       setChosenWord(random);
     };
     fetchChosenWord();
@@ -65,11 +58,11 @@ function App() {
   let thirdRowKeys = ["z", "x", "c", "v", "b", "n", "m"];
 
   useEffect(() => {
-    const modalShownBefore = localStorage.getItem('modalShownBefore');
+    const modalShownBefore = localStorage.getItem("modalShownBefore");
     if (!modalShownBefore) {
       setTimeout(() => {
         setShowModal(false);
-        localStorage.setItem('modalShownBefore', 'true');
+        localStorage.setItem("modalShownBefore", "true");
       }, 2500);
     } else {
       setShowModal(false);
@@ -83,12 +76,18 @@ function App() {
           Wordle Clone
         </Heading>
       </Center>
-      <Divider/>
-      {showModal && <WelcomePanel/>}
+      <Divider />
+      {showModal && <WelcomePanel />}
 
       {triesCount === 6 && !isGameOver && (
         <Center>
-          <Center color="white" bg="gray.700" borderRadius="md" pos="absolute" top={10}>
+          <Center
+            color="white"
+            bg="gray.700"
+            borderRadius="md"
+            pos="absolute"
+            top={10}
+          >
             <Text as="b" textTransform="uppercase" p={1}>
               {chosenWord}
             </Text>
@@ -98,7 +97,13 @@ function App() {
 
       {isGameOver && (
         <Center>
-          <Center color="white" bg="green.600" borderRadius="md" pos="absolute" top={10}>
+          <Center
+            color="white"
+            bg="green.600"
+            borderRadius="md"
+            pos="absolute"
+            top={10}
+          >
             <Text as="b" p={1}>
               {triesCount === 6 ? "Won!" : "Great!"}
             </Text>
@@ -106,20 +111,28 @@ function App() {
         </Center>
       )}
 
-      {triesCount < 6 && (
-        !isWordInList(currentGuess, wordList) && currentGuess.length === 5 && (
+      {triesCount < 6 &&
+        !isWordInList(currentGuess, wordList) &&
+        currentGuess.length === 5 && (
           <Center>
-            <Center color="white" bg="red.600" borderRadius="md" pos="absolute" top={10}>
-              <Text as="b" p={1}>Word not in list</Text>
+            <Center
+              color="white"
+              bg="red.600"
+              borderRadius="md"
+              pos="absolute"
+              top={10}
+            >
+              <Text as="b" p={1}>
+                Word not in list
+              </Text>
             </Center>
           </Center>
-        )
-      )}
+        )}
 
-      <Center w='100%' mt={10} p={5}>
+      <Center w="100%" mt={10} p={5}>
         <Box display="flex" flexDirection="column" gap="5px">
           {guesses.map((guess, i) => {
-            const isCurrentGuess = 
+            const isCurrentGuess =
               i === guesses.findIndex((val) => val == null);
             return (
               <Line
@@ -132,7 +145,7 @@ function App() {
           })}
         </Box>
       </Center>
-      
+
       {[firstRowKeys, secondRowKeys, thirdRowKeys].map((rowKeys, rowIndex) => (
         <Center key={`row-${rowIndex}`}>
           <Flex gap={1} mt={1} id={`row${rowIndex + 1}`}>
